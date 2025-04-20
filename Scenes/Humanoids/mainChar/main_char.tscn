@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj0knrgo4ckxd"]
+
+[ext_resource type="Script" path="res://Scenes/Humanoids/mainChar/main_char.gd" id="1_2l27m"]
+[ext_resource type="Texture2D" uid="uid://b3i8neagv3yyl" path="res://icon.svg" id="2_lxyn6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_y2lrm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rphjw"]
+radius = 32.3883
+
+[node name="MainChar" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_2l27m")
+metadata/_edit_group_ = true
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
+shape = SubResource("CapsuleShape2D_y2lrm")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
+scale = Vector2(0.1875, 0.25)
+texture = ExtResource("2_lxyn6")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -129)
+zoom = Vector2(1.25, 1.25)
+limit_left = -1027
+limit_right = 2176
+metadata/_edit_group_ = true
+
+[node name="Parry" type="Area2D" parent="." groups=["Parry"]]
+
+[node name="ParryHitbox" type="CollisionShape2D" parent="Parry"]
+shape = SubResource("CircleShape2D_rphjw")
+disabled = true
+
+[node name="DtTimer" type="Timer" parent="."]
+wait_time = 0.001
+one_shot = true
+
+[connection signal="area_entered" from="Parry" to="." method="_on_parry_area_entered"]
+[connection signal="timeout" from="DtTimer" to="." method="_on_dt_timer_timeout"]

@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsjfodk85cuq3"]
+
+[ext_resource type="Script" path="res://Scenes/MainMenu/main_menu.gd" id="1_duw6k"]
+[ext_resource type="Texture2D" uid="uid://dyvpkyfg5iefo" path="res://Scenes/MainMenu/mainMenuAssets/mainMenuBg.jpg" id="2_txxkr"]
+[ext_resource type="AudioStream" uid="uid://ojxcog25lrw7" path="res://Scenes/MainMenu/mainMenuAssets/frame.mp3" id="3_71qb2"]
+[ext_resource type="AudioStream" uid="uid://spc643j2h8mm" path="res://Scenes/MainMenu/mainMenuAssets/menuMusic.mp3" id="4_5evbk"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_duw6k")
+
+[node name="waitingRoom" type="ColorRect" parent="."]
+z_index = 1
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="Play" type="Button" parent="."]
+offset_left = 544.0
+offset_top = 463.0
+offset_right = 608.0
+offset_bottom = 496.0
+text = "PLAY!"
+
+[node name="backgroundBeautiful" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(575.75, 323.5)
+scale = Vector2(2.10695, 1.42325)
+texture = ExtResource("2_txxkr")
+metadata/_edit_lock_ = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_direction = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 240.0
+offset_top = 144.0
+offset_right = 1136.0
+offset_bottom = 234.0
+rotation = -0.174533
+pivot_offset = Vector2(320, 45)
+size_flags_horizontal = 4
+bbcode_enabled = true
+text = "[outline_size=32px][font=res://Scenes/MainMenu/mainMenuAssets/ComicSansMS3.ttf][font_size=64px] FramePerfectSuicide[/font_size]
+"
+fit_content = true
+metadata/_edit_use_anchors_ = true
+
+[node name="FPS" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_71qb2")
+volume_db = 16.0
+
+[node name="FPStext" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="textBg" type="ColorRect" parent="FPStext"]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="FPSTXT" type="RichTextLabel" parent="FPStext/textBg"]
+layout_mode = 0
+offset_top = 200.0
+offset_right = 1152.0
+offset_bottom = 848.0
+bbcode_enabled = true
+
+[node name="bgm" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_5evbk")
+parameters/looping = true
+
+[connection signal="pressed" from="Play" to="." method="_on_button_pressed"]
+[connection signal="finished" from="FPS" to="." method="_on_fps_finished"]
+[connection signal="ready" from="bgm" to="." method="_on_bgm_ready"]

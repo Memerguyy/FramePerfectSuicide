@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://dc5rrj2ry14ox"]
+
+[ext_resource type="Texture2D" uid="uid://b3i8neagv3yyl" path="res://icon.svg" id="1_ikhct"]
+[ext_resource type="PackedScene" uid="uid://bj0knrgo4ckxd" path="res://Scenes/Humanoids/mainChar/main_char.tscn" id="2_fnw22"]
+
+[sub_resource type="GDScript" id="GDScript_q8xru"]
+script/source = "extends StaticBody2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	print($\".\".get_child_count())
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	#for i in range($\".\".get_child_count()):
+		#print($\".\".get_children()[i].position.x)
+		#$\".\".get_children()[i].position.x = $\"../MainChar\".position.x
+		#pass
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l4ucg"]
+size = Vector2(640.178, 127.681)
+
+[node name="main" type="Node2D"]
+metadata/_edit_vertical_guides_ = [2000.0, -1028.0]
+
+[node name="ground" type="StaticBody2D" parent="."]
+position = Vector2(573, 606)
+script = SubResource("GDScript_q8xru")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+position = Vector2(-0.554932, 0.0352173)
+scale = Vector2(5, 1.34766)
+shape = SubResource("RectangleShape2D_l4ucg")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="ground/CollisionShape2D"]
+scale = Vector2(5, 1)
+texture = ExtResource("1_ikhct")
+metadata/_edit_group_ = true
+
+[node name="MainChar" parent="." instance=ExtResource("2_fnw22")]
+position = Vector2(573, 485)
