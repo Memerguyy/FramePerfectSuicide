@@ -10,6 +10,7 @@ func _ready() -> void:
 	#$".".position.distance_to($"../MainChar".position)
 	print($".".get_groups())
 	$".".global_position.y = $"../MainChar".position.y
+	$".".global_position.x = $"../MainChar".position.x + RandomNumberGenerator.new().randi_range(-1000, 1000)
 	pass
 	
 func _process(delta: float) -> void:

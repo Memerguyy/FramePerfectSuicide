@@ -9,7 +9,7 @@
 radius = 32.3883
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2pn6q"]
-radius = 21.0
+radius = 18.0
 height = 66.0
 
 [node name="MainChar" type="CharacterBody2D" groups=["Player"]]
@@ -33,12 +33,11 @@ limit_right = 2176
 metadata/_edit_group_ = true
 
 [node name="score" type="RichTextLabel" parent="Camera2D"]
-offset_left = -161.0
-offset_top = 53.0
-offset_right = 160.0
-offset_bottom = 91.0
+offset_left = -461.0
+offset_top = -259.0
+offset_right = 460.0
+offset_bottom = -221.0
 bbcode_enabled = true
-horizontal_alignment = 1
 
 [node name="Parry" type="Area2D" parent="." groups=["Parry"]]
 

@@ -5,8 +5,15 @@ const MAX_SPEED = 750.0
 const JUMP_VELOCITY = -700.0
 
 var tempDash := 0
+var score := 0.0
 
-func _process(_delta: float) -> void:	
+func _process(delta: float) -> void:
+	
+	#scoring
+	score += delta * 24
+	$Camera2D/score.text = "Your current score is: " + str(snapped(score, 0))
+	
+	#quit the game ( :C )
 	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
 	pass
@@ -14,7 +21,7 @@ func _process(_delta: float) -> void:
 	# Parry mechanic
 	if Input.is_action_just_pressed("parry"):
 		var tweenParry = get_tree().create_tween()
-		$Hitbox/Sprite2D.modulate = Color(1, 1, 0.725)
+		$CollisionBox/Sprite2D.modulate = Color(1, 1, 0.725)
 		$Parry/ParryHitbox.disabled = false
 		print("parry?")
 		
@@ -27,7 +34,7 @@ func _process(_delta: float) -> void:
 		while cdreset < 1.0:
 			await get_tree().create_timer(0.01).timeout
 			cdreset = move_toward(cdreset, 1.0, 0.275/24)
-			$Hitbox/Sprite2D.modulate = Color(1,1,cdreset)
+			$CollisionBox/Sprite2D.modulate = Color(1,1,cdreset)
 
 func _physics_process(delta: float) -> void:
 	
@@ -68,3 +75,9 @@ func _on_dt_timer_timeout() -> void:
 
 #func _on_parry_area_entered(area: Area2D) -> void:
 	#pass # Replace with function body.
+
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	if area.is_in_group("Enemy"):
+		get_tree().change_scene_to_file("res://Scenes/Game/deathAndLife/gameOver.tscn")
+	pass # Replace with function body.

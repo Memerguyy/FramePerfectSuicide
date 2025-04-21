@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://85dnk82imgj3"]
 
 [ext_resource type="Texture2D" uid="uid://b3i8neagv3yyl" path="res://icon.svg" id="1_dnm27"]
-[ext_resource type="Script" path="res://Scenes/Humanoids/Enemy/enemy.gd" id="1_ysch0"]
+[ext_resource type="Script" uid="uid://clob2ybacj842" path="res://Scenes/Humanoids/Enemy/enemy.gd" id="1_ysch0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_drkh4"]
-size = Vector2(48, 68)
+size = Vector2(44, 68)
 
 [node name="enemy" type="CharacterBody2D" groups=["Enemy"]]
 script = ExtResource("1_ysch0")
