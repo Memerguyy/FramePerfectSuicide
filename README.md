@@ -11,5 +11,5 @@ While there isn't much gameplay yet, the main controls of the game are
 * Left and right arrow keys (double tap to dash in a given direction)
 * Space to jump
 * F to ...parry?
-* 
+
 Evil red-tinted godot icon.svg's have overrun the kingdom of placeholdlandia under the rule of the SpawnerNode, your job is to parry them out of existance, though be careful, you're very weak and fragile, a single touch from them means DEATH!
