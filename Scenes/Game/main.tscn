@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dc5rrj2ry14ox"]
 
 [ext_resource type="Texture2D" uid="uid://b3i8neagv3yyl" path="res://icon.svg" id="1_ikhct"]
-[ext_resource type="Script" path="res://Scenes/Game/main.gd" id="1_krbxp"]
+[ext_resource type="Script" uid="uid://ctch7fdkslh0t" path="res://Scenes/Game/main.gd" id="1_krbxp"]
 [ext_resource type="PackedScene" uid="uid://bj0knrgo4ckxd" path="res://Scenes/Humanoids/mainChar/main_char.tscn" id="2_fnw22"]
 [ext_resource type="AudioStream" uid="uid://byoblp4atvsdm" path="res://Scenes/MainMenu/mainMenuAssets/spawn.mp3" id="4_emdee"]
 [ext_resource type="PackedScene" uid="uid://bd1sr3gyl0yw0" path="res://Scenes/Game/spawner.tscn" id="6_jqgp0"]
@@ -13,20 +13,24 @@ size = Vector2(640.178, 127.681)
 size = Vector2(58, 102)
 
 [node name="main" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_krbxp")
 metadata/_edit_vertical_guides_ = [2000.0, -1028.0]
 
 [node name="ground" type="StaticBody2D" parent="."]
+process_mode = 1
 position = Vector2(573, 606)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ground"]
+process_mode = 1
 position = Vector2(-0.554932, 0.0352173)
 scale = Vector2(5, 1.34766)
 shape = SubResource("RectangleShape2D_l4ucg")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ground/CollisionShape2D"]
+process_mode = 1
 scale = Vector2(5, 1)
 texture = ExtResource("1_ikhct")
 metadata/_edit_group_ = true
@@ -35,14 +39,18 @@ metadata/_edit_group_ = true
 position = Vector2(573, 485)
 
 [node name="Area2D" type="Area2D" parent="."]
+process_mode = 1
+visible = false
 position = Vector2(468, 496)
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+process_mode = 1
 shape = SubResource("RectangleShape2D_61kih")
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+process_mode = 1
 modulate = Color(1, 1, 1, 0.529412)
 position = Vector2(-1.71661e-05, 9.53674e-06)
 scale = Vector2(0.453125, 0.796875)
@@ -54,3 +62,4 @@ stream = ExtResource("4_emdee")
 volume_db = -15.0
 
 [node name="Spawner" parent="." instance=ExtResource("6_jqgp0")]
+process_mode = 1

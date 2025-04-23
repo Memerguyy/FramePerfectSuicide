@@ -12,50 +12,55 @@ radius = 32.3883
 radius = 21.0
 height = 66.0
 
-[node name="MainChar" type="CharacterBody2D" groups=["Player"]]
+[node name="mainCharNode" type="Node2D"]
+process_mode = 1
+
+[node name="MainChar" type="CharacterBody2D" parent="." groups=["Player"]]
+process_mode = 1
 script = ExtResource("1_2l27m")
 metadata/_edit_group_ = true
 
-[node name="CollisionBox" type="CollisionShape2D" parent="."]
+[node name="CollisionBox" type="CollisionShape2D" parent="MainChar"]
 scale = Vector2(2, 2)
 shape = SubResource("CapsuleShape2D_y2lrm")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="CollisionBox"]
+[node name="Sprite2D" type="Sprite2D" parent="MainChar/CollisionBox"]
 scale = Vector2(0.1875, 0.25)
 texture = ExtResource("2_lxyn6")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="MainChar"]
 position = Vector2(0, -129)
 zoom = Vector2(1.25, 1.25)
 limit_left = -1027
 limit_right = 2176
 metadata/_edit_group_ = true
 
-[node name="score" type="RichTextLabel" parent="Camera2D"]
+[node name="score" type="RichTextLabel" parent="MainChar/Camera2D"]
 offset_left = -161.0
 offset_top = 53.0
 offset_right = 160.0
 offset_bottom = 91.0
 bbcode_enabled = true
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Parry" type="Area2D" parent="." groups=["Parry"]]
+[node name="Parry" type="Area2D" parent="MainChar" groups=["Parry"]]
 
-[node name="ParryHitbox" type="CollisionShape2D" parent="Parry"]
+[node name="ParryHitbox" type="CollisionShape2D" parent="MainChar/Parry"]
 shape = SubResource("CircleShape2D_rphjw")
 disabled = true
 
-[node name="DtTimer" type="Timer" parent="."]
-wait_time = 0.001
-one_shot = true
+[node name="Hitbox" type="Area2D" parent="MainChar"]
 
-[node name="Hitbox" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainChar/Hitbox"]
 shape = SubResource("CapsuleShape2D_2pn6q")
 debug_color = Color(0.547757, 0.55624, 0.280374, 0.42)
 
-[connection signal="area_entered" from="Parry" to="." method="_on_parry_area_entered"]
-[connection signal="timeout" from="DtTimer" to="." method="_on_dt_timer_timeout"]
-[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[node name="DtTimer" type="Timer" parent="MainChar"]
+wait_time = 0.001
+one_shot = true
+
+[connection signal="area_entered" from="MainChar/Parry" to="MainChar" method="_on_parry_area_entered"]
+[connection signal="area_entered" from="MainChar/Hitbox" to="MainChar" method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="MainChar/DtTimer" to="MainChar" method="_on_dt_timer_timeout"]

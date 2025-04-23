@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var enemy = preload("res://Scenes/Humanoids/Enemy/enemy.tscn")
+
 const SPEED = 75.5
 const MAX_SPEED = 750.0
 const JUMP_VELOCITY = -700.0
@@ -7,8 +9,10 @@ const JUMP_VELOCITY = -700.0
 var tempDash := 0
 var score := 0.0
 
+func _ready() -> void:
+	print(float(get_tree().root.get_node("mainCharNode/MainChar/DtTimer").wait_time))
+
 func _process(delta: float) -> void:
-	
 	#scoring
 	score += delta * 24
 	$Camera2D/score.text = "Your current score is: " + str(snapped(score, 0))
@@ -25,7 +29,10 @@ func _process(delta: float) -> void:
 		$Parry/ParryHitbox.disabled = false
 		print("parry?")
 		
+		get_tree().paused = true
 		await get_tree().create_timer(0.375).timeout
+		get_tree().paused = false
+		
 		tweenParry.stop()
 		$Parry/ParryHitbox.disabled = true
 		print("parry time over")
@@ -49,10 +56,10 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
 	
 	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
-		$DtTimer.wait_time = 0.2
-		$DtTimer.start()
+		get_tree().root.get_node("mainCharNode/MainChar/DtTimer").wait_time = 0.2
+		get_tree().root.get_node("mainCharNode/MainChar/DtTimer").start()
 
-	if $DtTimer.wait_time > 0.1 && Input.is_action_just_pressed("ui_right") || $DtTimer.wait_time > 0.1 && Input.is_action_just_pressed("ui_left"):
+	if get_tree().root.get_node("mainCharNode/MainChar/DtTimer").wait_time > 0.1 && Input.is_action_just_pressed("ui_right") || get_tree().root.get_node("mainCharNode/MainChar/DtTimer").wait_time > 1 && Input.is_action_just_pressed("ui_left"):
 		tempDash += 1
 		if tempDash == 2:
 			velocity.x += direction * MAX_SPEED*5
@@ -73,8 +80,8 @@ func _physics_process(delta: float) -> void:
 func _on_dt_timer_timeout() -> void:
 	tempDash = 0
 
-#func _on_parry_area_entered(area: Area2D) -> void:
-	#pass # Replace with function body.
+func _on_parry_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.
 
 
 func _on_hitbox_area_entered(area: Area2D) -> void:

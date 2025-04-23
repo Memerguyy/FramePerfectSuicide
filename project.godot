@@ -15,6 +15,15 @@ run/main_scene="res://Scenes/MainMenu/mainMenu.tscn"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+enemy="*res://Scenes/Humanoids/Enemy/enemy.gd"
+main_char="*res://Scenes/Humanoids/mainChar/main_char.gd"
+
+[dotnet]
+
+project/assembly_name="FramePerfectSuicide"
+
 [global_group]
 
 Player="Main Player Character"
