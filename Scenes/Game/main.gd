@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var plr = $MainChar
+#@onready var plr = $MainChar
 @onready var enemy = preload("res://Scenes/Humanoids/Enemy/enemy.tscn")
 
 func _ready() -> void:

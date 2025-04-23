@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bj0knrgo4ckxd"]
+[gd_scene load_steps=8 format=3 uid="uid://bj0knrgo4ckxd"]
 
 [ext_resource type="Script" uid="uid://dnngnj8ppys7o" path="res://Scenes/Humanoids/mainChar/main_char.gd" id="1_2l27m"]
 [ext_resource type="Texture2D" uid="uid://b3i8neagv3yyl" path="res://icon.svg" id="2_lxyn6"]
@@ -12,31 +12,34 @@ radius = 32.3883
 radius = 21.0
 height = 66.0
 
-[node name="mainCharNode" type="Node2D"]
-process_mode = 1
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2pn6q"]
+size = Vector2(272, 45)
 
-[node name="MainChar" type="CharacterBody2D" parent="." groups=["Player"]]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mofq6"]
+height = 66.0
+
+[node name="MainChar" type="CharacterBody2D" groups=["Player"]]
 process_mode = 1
 script = ExtResource("1_2l27m")
 metadata/_edit_group_ = true
 
-[node name="CollisionBox" type="CollisionShape2D" parent="MainChar"]
+[node name="CollisionBox" type="CollisionShape2D" parent="."]
 scale = Vector2(2, 2)
 shape = SubResource("CapsuleShape2D_y2lrm")
 metadata/_edit_group_ = true
 
-[node name="Sprite2D" type="Sprite2D" parent="MainChar/CollisionBox"]
+[node name="Sprite2D" type="Sprite2D" parent="CollisionBox"]
 scale = Vector2(0.1875, 0.25)
 texture = ExtResource("2_lxyn6")
 
-[node name="Camera2D" type="Camera2D" parent="MainChar"]
+[node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -129)
 zoom = Vector2(1.25, 1.25)
 limit_left = -1027
 limit_right = 2176
 metadata/_edit_group_ = true
 
-[node name="score" type="RichTextLabel" parent="MainChar/Camera2D"]
+[node name="score" type="RichTextLabel" parent="Camera2D"]
 offset_left = -161.0
 offset_top = 53.0
 offset_right = 160.0
@@ -45,22 +48,37 @@ bbcode_enabled = true
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Parry" type="Area2D" parent="MainChar" groups=["Parry"]]
+[node name="Parry" type="Area2D" parent="." groups=["Parry"]]
 
-[node name="ParryHitbox" type="CollisionShape2D" parent="MainChar/Parry"]
+[node name="ParryHitbox" type="CollisionShape2D" parent="Parry"]
 shape = SubResource("CircleShape2D_rphjw")
 disabled = true
 
-[node name="Hitbox" type="Area2D" parent="MainChar"]
+[node name="Hitbox" type="Area2D" parent="."]
+process_mode = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MainChar/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+process_mode = 3
 shape = SubResource("CapsuleShape2D_2pn6q")
 debug_color = Color(0.547757, 0.55624, 0.280374, 0.42)
 
-[node name="DtTimer" type="Timer" parent="MainChar"]
+[node name="DtTimer" type="Timer" parent="."]
 wait_time = 0.001
 one_shot = true
 
-[connection signal="area_entered" from="MainChar/Parry" to="MainChar" method="_on_parry_area_entered"]
-[connection signal="area_entered" from="MainChar/Hitbox" to="MainChar" method="_on_hitbox_area_entered"]
-[connection signal="timeout" from="MainChar/DtTimer" to="MainChar" method="_on_dt_timer_timeout"]
+[node name="AttacksHitboxesWIP" type="Area2D" parent="."]
+
+[node name="Slam" type="CollisionShape2D" parent="AttacksHitboxesWIP"]
+visible = false
+position = Vector2(0, 12.5)
+shape = SubResource("RectangleShape2D_2pn6q")
+
+[node name="Slash" type="CollisionShape2D" parent="AttacksHitboxesWIP"]
+visible = false
+position = Vector2(49, 0)
+rotation = -1.57079
+shape = SubResource("CapsuleShape2D_mofq6")
+
+[connection signal="area_entered" from="Parry" to="." method="_on_parry_area_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="DtTimer" to="." method="_on_dt_timer_timeout"]

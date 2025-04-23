@@ -1,7 +1,7 @@
-res://Scenes/MainMenu/mainMenu.tscn
 res://Scenes/Game/main.tscn
-res://Scenes/Game/main.gd
 res://Scenes/Humanoids/mainChar/main_char.tscn
-res://Scenes/Humanoids/mainChar/main_char.gd
 res://Scenes/Humanoids/Enemy/enemy.tscn
+res://Scenes/Game/spawner.tscn
 res://Scenes/Humanoids/Enemy/enemy.gd
+res://Scenes/Humanoids/mainChar/main_char.gd
+res://Scenes/Game/Globals.gd

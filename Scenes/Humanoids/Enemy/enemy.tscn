@@ -7,6 +7,7 @@
 size = Vector2(44, 68)
 
 [node name="enemy" type="CharacterBody2D" groups=["Enemy"]]
+process_mode = 3
 script = ExtResource("1_ysch0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

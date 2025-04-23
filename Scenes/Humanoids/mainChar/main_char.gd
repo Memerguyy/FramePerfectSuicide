@@ -8,11 +8,13 @@ const JUMP_VELOCITY = -700.0
 
 var tempDash := 0
 var score := 0.0
+var floating := false
 
 func _ready() -> void:
-	print(float(get_tree().root.get_node("mainCharNode/MainChar/DtTimer").wait_time))
+	pass
 
 func _process(delta: float) -> void:
+	print($"../".global_position)
 	#scoring
 	score += delta * 24
 	$Camera2D/score.text = "Your current score is: " + str(snapped(score, 0))
@@ -24,18 +26,34 @@ func _process(delta: float) -> void:
 	
 	# Parry mechanic
 	if Input.is_action_just_pressed("parry"):
+		#sets the floating variable to true which makes the player's velocity (0,0)
+		floating = true
+		
+		#creates a tween for the camera zoom
 		var tweenParry = get_tree().create_tween()
+		
+		#makes the camera zoom
+		tweenParry.tween_property($Camera2D, "zoom", Vector2(1.75,1.75), 0.25).set_trans(Tween.TRANS_BACK)
+		
+		#enables the parry hitbox as well as makes the player piss themselves
 		$CollisionBox/Sprite2D.modulate = Color(1, 1, 0.725)
 		$Parry/ParryHitbox.disabled = false
-		print("parry?")
 		
-		get_tree().paused = true
+		#makes the pissing last a whopping .375ms
 		await get_tree().create_timer(0.375).timeout
-		get_tree().paused = false
 		
-		tweenParry.stop()
+		#makes the player not be paused anymore
+		floating = false
+		
+		#self explanatory
 		$Parry/ParryHitbox.disabled = true
-		print("parry time over")
+		
+		#for whatever fucking reason, i need to remake the tweener because it wont work any other way.
+		#idk
+		#idc
+		#it works.
+		tweenParry = get_tree().create_tween()
+		tweenParry.tween_property($Camera2D, "zoom", Vector2(1.25,1.25), 0.2).set_trans(Tween.TRANS_BACK)
 		
 		var cdreset := 0.725
 		while cdreset < 1.0:
@@ -44,9 +62,11 @@ func _process(delta: float) -> void:
 			$CollisionBox/Sprite2D.modulate = Color(1,1,cdreset)
 
 func _physics_process(delta: float) -> void:
-	
-	if not is_on_floor():
-		velocity += get_gravity() * delta*2
+	if floating == true:
+		$".".velocity = Vector2(0,0)
+	elif floating == false:
+		if not is_on_floor():
+			velocity += get_gravity() * delta*2
 
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -56,10 +76,10 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
 	
 	if Input.is_action_just_pressed("ui_right") || Input.is_action_just_pressed("ui_left"):
-		get_tree().root.get_node("mainCharNode/MainChar/DtTimer").wait_time = 0.2
-		get_tree().root.get_node("mainCharNode/MainChar/DtTimer").start()
+		$DtTimer.wait_time = 0.2
+		$DtTimer.start()
 
-	if get_tree().root.get_node("mainCharNode/MainChar/DtTimer").wait_time > 0.1 && Input.is_action_just_pressed("ui_right") || get_tree().root.get_node("mainCharNode/MainChar/DtTimer").wait_time > 1 && Input.is_action_just_pressed("ui_left"):
+	if $DtTimer.wait_time > 0.1 && Input.is_action_just_pressed("ui_right") || $DtTimer.wait_time > 1 && Input.is_action_just_pressed("ui_left"):
 		tempDash += 1
 		if tempDash == 2:
 			velocity.x += direction * MAX_SPEED*5
@@ -79,10 +99,6 @@ func _physics_process(delta: float) -> void:
 
 func _on_dt_timer_timeout() -> void:
 	tempDash = 0
-
-func _on_parry_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
-
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Enemy"):

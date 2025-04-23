@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dc5rrj2ry14ox"]
+[gd_scene load_steps=9 format=3 uid="uid://dc5rrj2ry14ox"]
 
 [ext_resource type="Texture2D" uid="uid://b3i8neagv3yyl" path="res://icon.svg" id="1_ikhct"]
 [ext_resource type="Script" uid="uid://ctch7fdkslh0t" path="res://Scenes/Game/main.gd" id="1_krbxp"]
@@ -11,6 +11,9 @@ size = Vector2(640.178, 127.681)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_61kih"]
 size = Vector2(58, 102)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o78p3"]
+size = Vector2(7.92683, 606)
 
 [node name="main" type="Node2D"]
 process_mode = 3
@@ -35,11 +38,8 @@ scale = Vector2(5, 1)
 texture = ExtResource("1_ikhct")
 metadata/_edit_group_ = true
 
-[node name="MainChar" parent="." instance=ExtResource("2_fnw22")]
-position = Vector2(573, 485)
-
 [node name="Area2D" type="Area2D" parent="."]
-process_mode = 1
+process_mode = 3
 visible = false
 position = Vector2(468, 496)
 metadata/_edit_group_ = true
@@ -63,3 +63,18 @@ volume_db = -15.0
 
 [node name="Spawner" parent="." instance=ExtResource("6_jqgp0")]
 process_mode = 1
+
+[node name="MainChar" parent="." instance=ExtResource("2_fnw22")]
+position = Vector2(787, 483)
+
+[node name="walls" type="StaticBody2D" parent="."]
+
+[node name="wallL" type="CollisionShape2D" parent="walls"]
+position = Vector2(-1086, 349)
+scale = Vector2(-14.6039, 1.13392)
+shape = SubResource("RectangleShape2D_o78p3")
+
+[node name="wallR" type="CollisionShape2D" parent="walls"]
+position = Vector2(2229, 349)
+scale = Vector2(-14.6039, 1.13392)
+shape = SubResource("RectangleShape2D_o78p3")

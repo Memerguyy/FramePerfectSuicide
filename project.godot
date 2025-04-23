@@ -17,8 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-enemy="*res://Scenes/Humanoids/Enemy/enemy.gd"
-main_char="*res://Scenes/Humanoids/mainChar/main_char.gd"
+Globals="*res://Scenes/Game/Globals.gd"
 
 [dotnet]
 
