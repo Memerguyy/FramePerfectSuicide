@@ -66,18 +66,18 @@ debug_color = Color(0.547757, 0.55624, 0.280374, 0.42)
 wait_time = 0.001
 one_shot = true
 
-[node name="AttacksHitboxesWIP" type="Area2D" parent="."]
+[node name="AttacksHitboxesWIP" type="Area2D" parent="." groups=["Attack"]]
 
 [node name="Slam" type="CollisionShape2D" parent="AttacksHitboxesWIP"]
-visible = false
 position = Vector2(0, 12.5)
 shape = SubResource("RectangleShape2D_2pn6q")
+disabled = true
 
 [node name="Slash" type="CollisionShape2D" parent="AttacksHitboxesWIP"]
-visible = false
 position = Vector2(49, 0)
 rotation = -1.57079
 shape = SubResource("CapsuleShape2D_mofq6")
+disabled = true
 
 [connection signal="area_entered" from="Parry" to="." method="_on_parry_area_entered"]
 [connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]

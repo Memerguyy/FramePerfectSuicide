@@ -6,15 +6,40 @@ const SPEED = 75.5
 const MAX_SPEED = 750.0
 const JUMP_VELOCITY = -700.0
 
+@onready var slamAtk := $AttacksHitboxesWIP/Slam
+
 var tempDash := 0
 var score := 0.0
 var floating := false
+
+var slamTime := Timer.new()
+var slamCheck := false
 
 func _ready() -> void:
 	pass
 
 func _process(delta: float) -> void:
-	print($"../".global_position)
+	if !is_on_floor():
+		if Input.is_action_just_pressed("ui_down") && !is_on_floor():
+			if Input.is_action_just_pressed("ui_down") && slamTime.time_left > 0.0:
+				slamCheck = true
+				if slamCheck == true:
+					velocity.y = JUMP_VELOCITY*-5
+					slamAtk.disabled = false
+					await get_tree().create_timer(0.2).timeout
+					slamAtk.disabled = true
+					slamCheck = false
+					pass
+			else:
+				add_child(slamTime)
+				slamTime.wait_time = 0.2
+				slamTime.one_shot = true
+				slamTime.start()
+	elif is_on_floor():
+		slamTime.stop()
+
+	
+	
 	#scoring
 	score += delta * 24
 	$Camera2D/score.text = "Your current score is: " + str(snapped(score, 0))
@@ -26,6 +51,8 @@ func _process(delta: float) -> void:
 	
 	# Parry mechanic
 	if Input.is_action_just_pressed("parry"):
+		#TODO: THE PARRY MECHANICS IS RELATED TO THE TITLE (somewhat) MAKE IS SO THAT WHEN AN ENEMY ENTERS THE HITBOX THERE'S A .2 SECOND WINDOW WHERE YOU CAN ""PARRY"" THE ENEMY AWAY, EFFECTIVELY CHEATING DEATH
+		
 		#sets the floating variable to true which makes the player's velocity (0,0)
 		floating = true
 		
@@ -33,7 +60,7 @@ func _process(delta: float) -> void:
 		var tweenParry = get_tree().create_tween()
 		
 		#makes the camera zoom
-		tweenParry.tween_property($Camera2D, "zoom", Vector2(1.75,1.75), 0.25).set_trans(Tween.TRANS_BACK)
+		tweenParry.tween_property($Camera2D, "zoom", Vector2(1.55,1.55), 0.25).set_trans(Tween.TRANS_BACK)
 		
 		#enables the parry hitbox as well as makes the player piss themselves
 		$CollisionBox/Sprite2D.modulate = Color(1, 1, 0.725)

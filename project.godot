@@ -28,6 +28,7 @@ project/assembly_name="FramePerfectSuicide"
 Player="Main Player Character"
 Enemy="Self explanatory, anything that counts as an enemy, used to call on it to remove any given object with this group from the tree"
 Parry=""
+Attack=""
 
 [input]
 

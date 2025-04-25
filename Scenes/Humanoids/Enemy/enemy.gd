@@ -20,8 +20,6 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	print($"../MainChar".position)
 	if pxTillPlr != 0:
 		$".".position.x += 5.5 * snappedi(($".".position.direction_to($"../MainChar".position)).x,1)
 	# make an if condition to where it just fucking checks if the enemy is inside of the player, if it isnt, move that ass towards him idfk
@@ -29,7 +27,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_collision_box_box_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Parry"):
+	if area.is_in_group("Parry") || area.is_in_group("Attack"):
 		print("parried!")
 		$".".queue_free()
 	pass # Replace with function body.
